@@ -1,16 +1,18 @@
-# React + Vite
+# Memory Match Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A browser-based memory game where players flip cards to find matching pairs, tracking moves and score along the way.
 
-Currently, two official plugins are available:
+Built with React, this project demonstrates state management with hooks, component-based architecture, game logic handling, and dynamic UI updates. Features include card shuffling, match detection, move tracking, score calculation, and win condition handling.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Used
 
-## React Compiler
+- React (useState, useEffect)
+- JavaScript (ES6+)
+- CSS
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## What I Practiced
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Managing complex state across multiple components
+- Implementing game logic and user interactions
+- Handling asynchronous updates and UI locking
+- Writing clean, reusable components
