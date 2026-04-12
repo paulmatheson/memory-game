@@ -36,7 +36,6 @@ body {
   gap: 20px;
   background: rgba(15, 23, 42, 0.9);
   padding: 30px;
-  border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   width: 100%;
   max-width: 600px;
@@ -155,7 +154,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   backface-visibility: hidden;
   transition:
@@ -164,7 +162,11 @@ body {
 }
 
 .card-front {
-  background: linear-gradient(to bottom, #0f172a, #0b0f1a);
+  --border-width: 2px;
+  --bg: linear-gradient(to bottom, #0f172a, #0b0f1a);
+
+  overflow: hidden;
+  background: var(--bg);
   color: white;
   font-weight: bold;
   font-size: 3rem;
@@ -172,11 +174,58 @@ body {
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
+.card:is(:hover, :focus-within) {
+  --active: 1;
+}
+
+.card-front:after,
+.card-front::before {
+  --alpha: 1;
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.card-front::before {
+  --alpha: 0.8;
+  opacity: var(--active, 0);
+  transition: opacity 0.2s;
+  background: radial-gradient(
+    circle at calc(var(--x) * 1px) calc(var(--y) * 1px),
+    hsl(0 0% 100% / 1) 0px,
+    hsl(0 0% 100% / 0.8) 20px,
+    hsl(0 0% 100% / 0.4) 60px,
+    transparent 120px
+  );
+  background-attachment: fixed;
+  mask:
+    linear-gradient(#fff, #fff) 50% 0 / 100% var(--border-width) no-repeat,
+    linear-gradient(#fff, #fff) 100% 0 / var(--border-width) 100% no-repeat,
+    linear-gradient(#fff, #fff) 50% 100% / 100% var(--border-width) no-repeat,
+    linear-gradient(#fff, #fff) 0% 0 / var(--border-width) 100% no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.card-front::after {
+  --alpha: 0.15;
+  opacity: var(--active, 0);
+  transition: opacity 0.2s;
+  background: radial-gradient(
+    circle at calc(var(--x) * 1px) calc(var(--y) * 1px),
+    hsl(0 0% 100% / var(--alpha)),
+    transparent 150px
+  );
+  background-attachment: fixed;
+}
 .card-back {
   background: #1e1e1e;
   font-size: 4rem;
   z-index: 0;
   border: 2px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .card.flipped .card-front {
@@ -187,6 +236,7 @@ body {
 
 .card.flipped .card-back {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .card.matched {
@@ -197,10 +247,6 @@ body {
   background: rgba(126, 211, 33, 0.2);
   box-shadow: 0 0 20px rgba(126, 211, 33, 0.4);
   border: 2px solid rgba(126, 211, 33, 0.5);
-}
-
-.card:hover:not(.matched):not(.flipped) .card-front {
-  transform: scale(1.05);
 }
 
 .card:active:not(.matched) {
